@@ -36,6 +36,4 @@ if the URL is not associated with any website you see the error
 
 ### Improve frontend
 
-### Try this library
-
 ### Improve logger
