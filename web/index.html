@@ -30,24 +30,27 @@
                     if (response.error) {
                         $('#results').html('<h2>Error</h2><p>' + response.error + '</p>');
                     } else {
-                        var htmlVersion = response.HTMLVersion ? response.HTMLVersion : "Unknown";
-                        var title = response.Title ? response.Title : "Unknown";
-                        var headings = response.Headings ? response.Headings : {};
-                        var links = response.Links ? response.Links : {};
-                        var containsLoginForm = response.ContainsLoginForm ? "Yes" : "No";
+                        var htmlVersion = response.html_version ? response.html_version : "Unknown";
+                        var title = response.title ? response.title : "Unknown";
+                        var headings = response.headings ? response.headings : {};
+                        var links = response.links ? response.links : {};
+                        var containsLoginForm = response.contains_login_form ? "Yes" : "No";
 
                         var resultHtml = '<h2>Analysis Results</h2>';
                         resultHtml += '<p>HTML Version: ' + htmlVersion + '</p>';
                         resultHtml += '<p>Title: ' + title + '</p>';
                         resultHtml += '<p>Headings:</p><ul>';
-                        for (var key in headings) {
-                            resultHtml += '<li>' + key + ': ' + headings[key] + '</li>';
-                        }
+                        resultHtml += '<li>H1: ' + (headings.h1 ? headings.h1 : 0) + '</li>';
+                        resultHtml += '<li>H2: ' + (headings.h2 ? headings.h2 : 0) + '</li>';
+                        resultHtml += '<li>H3: ' + (headings.h3 ? headings.h3 : 0) + '</li>';
+                        resultHtml += '<li>H4: ' + (headings.h4 ? headings.h4 : 0) + '</li>';
+                        resultHtml += '<li>H5: ' + (headings.h5 ? headings.h5 : 0) + '</li>';
+                        resultHtml += '<li>H6: ' + (headings.h6 ? headings.h6 : 0) + '</li>';
                         resultHtml += '</ul>';
                         resultHtml += '<p>Links:</p><ul>';
-                        resultHtml += '<li>Internal: ' + (links.Internal ? links.Internal.Count : 0) + '</li>';
-                        resultHtml += '<li>External: ' + (links.External ? links.External.Count : 0) + '</li>';
-                        resultHtml += '<li>Inaccessible: ' + (links.Inaccessible ? links.Inaccessible : 0) + '</li>';
+                        resultHtml += '<li>Internal: ' + (links.internal ? links.internal.count : 0) + '</li>';
+                        resultHtml += '<li>External: ' + (links.external ? links.external.count : 0) + '</li>';
+                        resultHtml += '<li>Inaccessible: ' + (links.inaccessible ? links.inaccessible : 0) + '</li>';
                         resultHtml += '</ul>';
                         resultHtml += '<p>Contains Login Form: ' + containsLoginForm + '</p>';
 

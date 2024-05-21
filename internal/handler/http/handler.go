@@ -5,12 +5,13 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/mikitabablo/webpages/internal/domain"
 	"github.com/rs/zerolog"
 )
 
 type (
 	IWebpageAnalyzer interface {
-		AnalyzeWebpage(ctx context.Context, url string) (interface{}, error)
+		AnalyzeWebpage(ctx context.Context, url string) (*domain.AnalyzeResult, error)
 	}
 
 	Handler struct {
@@ -56,5 +57,5 @@ func (h *Handler) Analyze(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, res)
+	c.JSON(http.StatusOK, fromDomain(res))
 }

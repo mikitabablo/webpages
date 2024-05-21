@@ -38,7 +38,7 @@ func NewUsecase(
 	}
 }
 
-func (u *Usecase) AnalyzeWebpage(ctx context.Context, url string) (interface{}, error) {
+func (u *Usecase) AnalyzeWebpage(ctx context.Context, url string) (*domain.AnalyzeResult, error) {
 	res, err := u.scrapper.Scrap(url)
 	if err != nil {
 		u.log.Err(err).Msg("Visit failed")
@@ -51,7 +51,7 @@ func (u *Usecase) AnalyzeWebpage(ctx context.Context, url string) (interface{}, 
 		return nil, err
 	}
 
-	analyzeRes := domain.AnalyzeResult{
+	analyzeRes := &domain.AnalyzeResult{
 		HTMLVersion: res.HTMLVersion,
 		Title:       res.Title,
 		Headings: domain.HeadingsCounter{
