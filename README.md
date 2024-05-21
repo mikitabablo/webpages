@@ -33,7 +33,6 @@ if the URL is not associated with any website you see the error
 ### Form Analyze:
 - More cases should be considered on analyze
 - Form analyze not always works correctly (investigate is it a problem of the library)
-- 
 
 ### Improve frontend
 
