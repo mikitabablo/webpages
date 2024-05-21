@@ -1,0 +1,52 @@
+### Analyze URL
+POST {{host}}/api/webpage/analyze
+Content-Type: application/json
+
+{
+  "url": "https://example.com"
+}
+
+### Analyze Social VK
+POST {{host}}/api/webpage/analyze
+Content-Type: application/json
+
+{
+  "url": "https://facebook.com"
+}
+
+### Analyze W3 main URL
+POST {{host}}/api/webpage/analyze
+Content-Type: application/json
+
+{
+  "url": "https://www.w3schools.com/"
+}
+
+
+### Analyze Form URL
+POST {{host}}/api/webpage/analyze
+Content-Type: application/json
+
+{
+  "url": "https://formsmarts.com/html-form-example"
+}
+
+
+### Analyze Wiki Login Form URL
+POST {{host}}/api/webpage/analyze
+Content-Type: application/json
+
+{
+  "url": "https://en.wikipedia.org/w/index.php?returnto=Zero-knowledge+proof&title=Special:UserLogin&centralAuthAutologinTried=1&centralAuthError=Not+centrally+logged+in"
+}
+
+
+### Analyze wrong URL
+POST {{host}}/api/webpage/analyze
+Content-Type: application/json
+
+{
+  "url": "https://example111111.com"
+}
+
+###
