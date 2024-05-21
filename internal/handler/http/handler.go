@@ -14,8 +14,7 @@ type (
 	}
 
 	Handler struct {
-		log          zerolog.Logger
-		routerEngine *gin.RouterGroup
+		log zerolog.Logger
 
 		parserUsecase IWebpageAnalyzer
 	}
@@ -28,7 +27,6 @@ func InitHandler(
 ) {
 	handler := &Handler{
 		log:           log,
-		routerEngine:  router,
 		parserUsecase: parserUsecase,
 	}
 

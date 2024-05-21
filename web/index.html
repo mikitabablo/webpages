@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webpage Analyzer</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<h1>Webpage Analyzer</h1>
+<form id="urlForm">
+    <label for="url">Enter URL:</label>
+    <input type="text" id="url" name="url" required>
+    <button type="submit">Analyze</button>
+</form>
+<div id="results"></div>
+
+<script>
+    $(document).ready(function(){
+        $('#urlForm').on('submit', function(event){
+            event.preventDefault();
+            var url = $('#url').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/webpage/analyze',
+                data: JSON.stringify({url: url}),
+                contentType: 'application/json',
+                success: function(response) {
+                    if (response.error) {
+                        $('#results').html('<h2>Error</h2><p>' + response.error + '</p>');
+                    } else {
+                        var htmlVersion = response.HTMLVersion ? response.HTMLVersion : "Unknown";
+                        var title = response.Title ? response.Title : "Unknown";
+                        var headings = response.Headings ? response.Headings : {};
+                        var links = response.Links ? response.Links : {};
+                        var containsLoginForm = response.ContainsLoginForm ? "Yes" : "No";
+
+                        var resultHtml = '<h2>Analysis Results</h2>';
+                        resultHtml += '<p>HTML Version: ' + htmlVersion + '</p>';
+                        resultHtml += '<p>Title: ' + title + '</p>';
+                        resultHtml += '<p>Headings:</p><ul>';
+                        for (var key in headings) {
+                            resultHtml += '<li>' + key + ': ' + headings[key] + '</li>';
+                        }
+                        resultHtml += '</ul>';
+                        resultHtml += '<p>Links:</p><ul>';
+                        resultHtml += '<li>Internal: ' + (links.Internal ? links.Internal.Count : 0) + '</li>';
+                        resultHtml += '<li>External: ' + (links.External ? links.External.Count : 0) + '</li>';
+                        resultHtml += '<li>Inaccessible: ' + (links.Inaccessible ? links.Inaccessible : 0) + '</li>';
+                        resultHtml += '</ul>';
+                        resultHtml += '<p>Contains Login Form: ' + containsLoginForm + '</p>';
+
+                        $('#results').html(resultHtml);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    var errorMessage = "Error: ";
+                    if (xhr.status) {
+                        errorMessage += xhr.status + " - ";
+                    }
+                    errorMessage += "Failed to fetch the URL. ";
+                    if (xhr.responseText) {
+                        errorMessage += xhr.responseText;
+                    }
+                    $('#results').html('<h2>Error</h2><p>' + errorMessage + '</p>');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

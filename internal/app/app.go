@@ -23,6 +23,8 @@ func NewApp(cfg *config.Config, l zerolog.Logger) *App {
 
 	factory := NewFactory(l)
 
+	r.StaticFile("/", "./web/index.html")
+
 	apiRoutes := r.Group("/api")
 	httpHandler.InitHandler(
 		l,

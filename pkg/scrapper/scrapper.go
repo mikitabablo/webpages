@@ -37,24 +37,9 @@ func (s *Scrapper) Scrap(scrapURL string) (ParseResult, error) {
 		return parseResult, ErrParseURLFailed
 	}
 
-	// HTML Version
-	c.OnHTML("html", func(e *colly.HTMLElement) {
-		doc := e.DOM.ParentsUntil("html")
-		if doc.Length() > 0 {
-			docType := strings.ToUpper(doc.Nodes[0].FirstChild.Data)
-			switch {
-			case strings.Contains(docType, "HTML 5"):
-				parseResult.HTMLVersion = "HTML5"
-			case strings.Contains(docType, "XHTML"):
-				parseResult.HTMLVersion = "XHTML"
-			case strings.Contains(docType, "HTML 4.01"):
-				parseResult.HTMLVersion = "HTML 4.01"
-			default:
-				parseResult.HTMLVersion = "Unknown or not a valid HTML document"
-			}
-		} else {
-			parseResult.HTMLVersion = "DOCTYPE not found or unable to determine HTML version"
-		}
+	// Find the DOCTYPE declaration
+	c.OnHTML("doctype", func(e *colly.HTMLElement) {
+		parseResult.HTMLVersion = strings.TrimSpace(e.Text)
 	})
 
 	// Title
@@ -118,6 +103,11 @@ func (s *Scrapper) Scrap(scrapURL string) (ParseResult, error) {
 	err = c.Visit(scrapURL)
 	if err != nil {
 		return parseResult, err
+	}
+
+	// If DOCTYPE declaration was not found, return a default value
+	if parseResult.HTMLVersion == "" {
+		parseResult.HTMLVersion = "HTML5"
 	}
 
 	return parseResult, nil
