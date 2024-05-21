@@ -27,7 +27,7 @@ func NewApp(cfg *config.Config, l zerolog.Logger) *App {
 	httpHandler.InitHandler(
 		l,
 		apiRoutes,
-		factory.GetParserUsecase(),
+		factory.GetWebpageAnalyzerUsecase(),
 	)
 
 	// health route

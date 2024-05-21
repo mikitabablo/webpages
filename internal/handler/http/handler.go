@@ -9,22 +9,22 @@ import (
 )
 
 type (
-	IWebpageParser interface {
-		Scrape(ctx context.Context, url string) (interface{}, error)
+	IWebpageAnalyzer interface {
+		AnalyzeWebpage(ctx context.Context, url string) (interface{}, error)
 	}
 
 	Handler struct {
 		log          zerolog.Logger
 		routerEngine *gin.RouterGroup
 
-		parserUsecase IWebpageParser
+		parserUsecase IWebpageAnalyzer
 	}
 )
 
 func InitHandler(
 	log zerolog.Logger,
 	router *gin.RouterGroup,
-	parserUsecase IWebpageParser,
+	parserUsecase IWebpageAnalyzer,
 ) {
 	handler := &Handler{
 		log:           log,
@@ -49,7 +49,7 @@ func (h *Handler) Analyze(c *gin.Context) {
 		return
 	}
 
-	res, err := h.parserUsecase.Scrape(ctx, req.URL)
+	res, err := h.parserUsecase.AnalyzeWebpage(ctx, req.URL)
 	if err != nil {
 		h.log.Err(err).Msg(ErrInvalidURL.Error())
 		c.JSON(http.StatusNotFound, ErrResponse{

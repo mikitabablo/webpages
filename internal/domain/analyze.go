@@ -1,7 +1,7 @@
 package domain
 
 type (
-	ParseResult struct {
+	AnalyzeResult struct {
 		HTMLVersion       string
 		Title             string
 		Headings          HeadingsCounter
@@ -23,23 +23,12 @@ type (
 	}
 
 	Links struct {
-		Internal LinksInfo
-		External LinksInfo
+		Internal     LinksInfo
+		External     LinksInfo
+		Inaccessible int
 	}
 
 	LinksInfo struct {
-		Count        int
-		Accessible   AccessibleLinks
-		Inaccessible InaccessibleLinks
-	}
-
-	AccessibleLinks struct {
-		Links []string
-		Count int
-	}
-
-	InaccessibleLinks struct {
-		Links []string
 		Count int
 	}
 )

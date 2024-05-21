@@ -2,44 +2,32 @@ package scrapper
 
 type (
 	ParseResult struct {
-		HTMLVersion       string
-		Title             string
-		Headings          HeadingsCounter
-		Links             Links
-		ContainsLoginForm bool
+		HTMLVersion string
+		Title       string
+		Headings    Headings
+		Links       []string
+		Forms       []Form
 	}
 
 	ErrorResult struct {
 		Error error
 	}
 
-	HeadingsCounter struct {
-		H1 int
-		H2 int
-		H3 int
-		H4 int
-		H5 int
-		H6 int
+	Headings struct {
+		H1 []string
+		H2 []string
+		H3 []string
+		H4 []string
+		H5 []string
+		H6 []string
 	}
 
-	Links struct {
-		Internal LinksInfo
-		External LinksInfo
+	Form struct {
+		Action string
+		Inputs []Input
 	}
 
-	LinksInfo struct {
-		Count        int
-		Accessible   AccessibleLinks
-		Inaccessible InaccessibleLinks
-	}
-
-	AccessibleLinks struct {
-		Links []string
-		Count int
-	}
-
-	InaccessibleLinks struct {
-		Links []string
-		Count int
+	Input struct {
+		Type string
 	}
 )

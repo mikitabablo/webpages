@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 
-### Analyze Form URL
+### Analyze URL with Form
 POST {{host}}/api/webpage/analyze
 Content-Type: application/json
 
